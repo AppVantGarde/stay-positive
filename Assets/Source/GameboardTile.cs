@@ -26,9 +26,19 @@ public class GameboardTile : MonoBehaviour
     {
         tileImage.color = gameboardColor.value;
 
-        _value = constantValue == 0 ? Random.Range( sharedMinTileValue.value, sharedMaxTileValue.value ) : constantValue;
-
-        _value = Random.value < 0.4f ? -1 : _value;
+        if(constantValue == -1)
+        {
+            tileImage.color = new Color( 0.4f, 0.4f, 0.4f, 1 );
+            tileText.text = "";
+        }
+        else if(constantValue == 0)
+        {
+            _value = Random.Range( sharedMinTileValue.value, sharedMaxTileValue.value );
+        }
+        else
+        {
+            _value = constantValue;
+        }
 
         if(_value == -1)
         {
