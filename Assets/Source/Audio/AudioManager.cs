@@ -31,8 +31,6 @@ public class AudioManager : MonoBehaviour
 
     public List<AudioCue> audioCues;
 
-    public SharedPersistentBool audioMuted;
-
     private List<CachedAudioSource> _activeAudioSources;
     private List<CachedAudioSource> _inactiveAudioSources;
 
@@ -152,7 +150,7 @@ public class AudioManager : MonoBehaviour
     /// <param name="ignorePause"></param>
     private void PlayAudioCue(int index, bool ignorePause )
     {
-        if(audioMuted.Value || audioCues[index].clips.Length == 0)
+        if(audioCues[index].clips.Length == 0)
             return;
 
         CachedAudioSource source    = GetAudioSource(index);

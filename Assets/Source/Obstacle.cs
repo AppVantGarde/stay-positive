@@ -14,6 +14,8 @@ public class Obstacle : MonoBehaviour
     public Vector3 start, end;
     public float moveTime;
 
+    private AudioCue _negativeAudioCue;
+
     public void Start( )
     {
         textValue.GetComponent<Renderer>( ).sortingLayerName = "AboveDefault";
@@ -30,12 +32,15 @@ public class Obstacle : MonoBehaviour
         //s.Append( transform.DOMove( start, moveTime ).SetEase( Ease.InOutCubic ) );
         //s.AppendInterval( 0.5f );
         s.SetLoops( -1, LoopType.Yoyo );
+
+        _negativeAudioCue = Resources.Load<AudioCue>( "Audio/Negative" );
     }
 
     public void OnTriggerEnter2D( Collider2D collision )
     {
         if(collision.gameObject.tag == "Player")
         {
+            _negativeAudioCue.Play( );
             playerScore.value -= negativeValue;
         }
     }

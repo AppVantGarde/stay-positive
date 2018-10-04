@@ -14,6 +14,7 @@ public class GameboardTile : MonoBehaviour
     public SharedColor scoredTileColor;
 
     public Image tileImage;
+    private Color _baseColor;
     public TMP_Text tileText;
     public BoxCollider2D tileCollider;
 
@@ -22,13 +23,17 @@ public class GameboardTile : MonoBehaviour
     private int _value;
     private bool _awardedValue;
 
+    private AudioCue _positiveAudioCue;
+
     public void Start( )
     {
+        _baseColor = tileImage.color;
         tileImage.color = gameboardColor.value;
 
         if(constantValue == -1)
         {
-            tileImage.color = new Color( 0.4f, 0.4f, 0.4f, 1 );
+            _value = 0;
+            tileImage.color = _baseColor;
             tileText.text = "";
         }
         else if(constantValue == 0)
@@ -40,13 +45,10 @@ public class GameboardTile : MonoBehaviour
             _value = constantValue;
         }
 
-        if(_value == -1)
-        {
-            tileImage.color = new Color( 0.4f, 0.4f, 0.4f, 1 );
-            tileText.text = "";
-        }
-        else
+        if(constantValue != -1)
             tileText.SetText( _value.ToString( ) );
+
+        _positiveAudioCue = Resources.Load<AudioCue>( "Audio/Positive" );
     }
 
     public void OnTriggerEnter2D( Collider2D collision )
@@ -59,6 +61,10 @@ public class GameboardTile : MonoBehaviour
 
         if(collision.gameObject.tag == "Player")
         {
+            _positiveAudioCue.Play( );
+
+            iOSHapticFeedback.Instance.Trigger( iOSHapticFeedback.iOSFeedbackType.ImpactLight );
+
             playerScore.value = playerScore.value + _value;
 
             tileImage.DOColor( scoredTileColor.value, 0.25f ).SetEase( Ease.InOutCubic );

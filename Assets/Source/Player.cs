@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     private bool _hasKey;
     private int _prevScore;
 
+    private AudioCue _winAudioCue;
+    private AudioCue _loseAudioCue;
 
     public void Start( )
     {
@@ -39,6 +41,11 @@ public class Player : MonoBehaviour
         lineStartRect.anchoredPosition = Vector2.zero;
  
         lineStartRect.DOAnchorPos( Vector2.zero, 0.25f );
+
+        transform.localScale = new Vector3( 0.3f, 0.3f, 1 );
+
+        _winAudioCue = Resources.Load<AudioCue>( "Audio/Win" );
+        _loseAudioCue = Resources.Load<AudioCue>( "Audio/Lose" );
     }
 
     public void Update( )
@@ -47,12 +54,14 @@ public class Player : MonoBehaviour
         {
             if(playerScore.value < 0)
             {
+                spriteRenderer.color = Color.white;
                 spriteRenderer.sprite = sadFaceSprite;
 
             }
 
             if(_prevScore <= 0 && playerScore.value > 0)
             {
+                spriteRenderer.color = Color.yellow;
                 spriteRenderer.sprite = superHappySprite;
                 ringSpriteRenderer.transform.localScale = Vector3.zero;
                 ringSpriteRenderer.color = Color.green;
@@ -75,6 +84,8 @@ public class Player : MonoBehaviour
         {
             if(playerScore.value < 0)//!_hasKey)
             {
+                _loseAudioCue.Play( );
+                spriteRenderer.color = Color.white;
                 spriteRenderer.sprite = sadFaceSprite;
 
                 circleCollider.enabled = false;
@@ -93,6 +104,10 @@ public class Player : MonoBehaviour
                 return;
             }
 
+            _winAudioCue.Play( );
+            iOSHapticFeedback.Instance.Trigger( iOSHapticFeedback.iOSFeedbackType.Success );
+
+            spriteRenderer.color = Color.yellow;
             spriteRenderer.sprite = superHappySprite;
 
             transform.DOKill( );
@@ -130,6 +145,8 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.tag == "Obstacle")
         {
+            iOSHapticFeedback.Instance.Trigger( iOSHapticFeedback.iOSFeedbackType.ImpactHeavy );
+            spriteRenderer.color = Color.white;
             spriteRenderer.sprite = sadFaceSprite;
 
             //circleCollider.enabled = false;

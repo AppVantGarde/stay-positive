@@ -10,6 +10,6 @@ public class CurrentLevelLabel : MonoBehaviour
 
     public void Start( )
     {
-        currentLevelLabel.text = "LEVEL " + (SceneManager.GetActiveScene( ).buildIndex - 1);
+        currentLevelLabel.text = "L-" + (SceneManager.GetActiveScene( ).buildIndex - 1);
     }
 }
