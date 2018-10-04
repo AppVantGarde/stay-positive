@@ -22,6 +22,8 @@ public class Obstacle : MonoBehaviour
 
         textValue.SetText( "-" + negativeValue );
 
+        _negativeAudioCue = Resources.Load<AudioCue>( "Audio/Negative" );
+
         if(!moving)
             return;
 
@@ -33,7 +35,7 @@ public class Obstacle : MonoBehaviour
         //s.AppendInterval( 0.5f );
         s.SetLoops( -1, LoopType.Yoyo );
 
-        _negativeAudioCue = Resources.Load<AudioCue>( "Audio/Negative" );
+        
     }
 
     public void OnTriggerEnter2D( Collider2D collision )

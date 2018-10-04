@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
  
         lineStartRect.DOAnchorPos( Vector2.zero, 0.25f );
 
-        transform.localScale = new Vector3( 0.3f, 0.3f, 1 );
+        transform.localScale = new Vector3( 0.28f, 0.28f, 1 );
 
         _winAudioCue = Resources.Load<AudioCue>( "Audio/Win" );
         _loseAudioCue = Resources.Load<AudioCue>( "Audio/Lose" );
