@@ -158,8 +158,15 @@ public class Player : MonoBehaviour
             //transform.DOKill( );
             //transform.DOShakePosition( 0.5f, new Vector3(0.1f, 0.1f, 0) );
 
-            flashImage.DOColor( new Color( 1, 0, 0, 1 ), 0.05f ).SetEase( Ease.OutCubic );
-            flashImage.DOColor( new Color( 1, 0, 0, 0 ), 0.15f ).SetEase( Ease.InOutCubic ).SetDelay( 0.05f );
+            if(!_flashCooldown)
+            {
+                _flashCooldown = true;
+                flashImage.DOColor( new Color( 1, 0, 0, 1 ), 0.05f ).SetEase( Ease.OutCubic );
+                flashImage.DOColor( new Color( 1, 0, 0, 0 ), 0.15f ).SetEase( Ease.InOutCubic ).SetDelay( 0.05f );
+
+                DOVirtual.DelayedCall( 0.5f, ( ) => { _flashCooldown = false; } );
+            }
+
 
             //DOVirtual.DelayedCall( 1f, ( ) =>
             //{
@@ -176,4 +183,6 @@ public class Player : MonoBehaviour
         //    key.transform.DORotate( new Vector3( 0, 0, 45 ), 0.3f );
         //}
     }
+
+    private bool _flashCooldown;
 }
