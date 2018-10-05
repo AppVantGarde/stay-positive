@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using GameAnalyticsSDK;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour
 
         _winAudioCue = Resources.Load<AudioCue>( "Audio/Win" );
         _loseAudioCue = Resources.Load<AudioCue>( "Audio/Lose" );
+
+        GameAnalytics.NewProgressionEvent(GAProgressionStatus.Start, "game");
     }
 
     public void Update( )
@@ -82,6 +85,8 @@ public class Player : MonoBehaviour
 
         if(collision.gameObject.tag == "Target")
         {
+            GameAnalytics.NewProgressionEvent( GAProgressionStatus.Complete, "game", playerScore.value );
+
             if(playerScore.value < 0)//!_hasKey)
             {
                 _loseAudioCue.Play( );
