@@ -54,6 +54,8 @@ public class SaveGame
         // Allocate memory storage
         _data = new Dictionary<string, string>( );
         _dataLists = new Dictionary<string, List<string>>( );
+
+        Load( );
     }
 
     /// <summary>

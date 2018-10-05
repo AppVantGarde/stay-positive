@@ -9,6 +9,7 @@ public class UIScreen_Home : MonoBehaviour
 {
     public SharedInt currentLevel;
     public Image foregroundImage;
+    public SharedPersistentInt savedLevel;
 
     public void Start( )
     {
@@ -24,7 +25,9 @@ public class UIScreen_Home : MonoBehaviour
             //if(++idx >= SceneManager.sceneCountInBuildSettings)
             //    idx = 0;
 
-            SceneManager.LoadScene( "level_1" );
+            
+
+            SceneManager.LoadScene( savedLevel.Value );
         } );
     }
 

@@ -16,6 +16,13 @@ public class UIScreen_LevelComplete : MonoBehaviour
     public GameObject levelCompletedObject;
     public GameObject replayLevelObject;
 
+    private SharedPersistentInt _savedLevel;
+
+    public void Awake( )
+    {
+        _savedLevel = Resources.Load<SharedPersistentInt>( "Shared/SavedLevel" );
+    }
+
     public void OnEnable( )
     {
         foregroundImage.DOColor( new Color( 0, 0, 0, 0 ), 0.25f ).SetDelay( 0.1f ).OnComplete( ( ) => { foregroundImage.color = Color.clear; } );
@@ -43,10 +50,13 @@ public class UIScreen_LevelComplete : MonoBehaviour
     {
         foregroundImage.DOColor( new Color( 0, 0, 0, 1 ), 0.25f ).OnComplete( ( ) =>
         {
-            int idx = SceneManager.GetActiveScene( ).buildIndex;
+            int idx = _savedLevel.Value;//SceneManager.GetActiveScene( ).buildIndex;
 
             if(++idx >= SceneManager.sceneCountInBuildSettings)
-                idx = 0;
+                idx = Random.Range( 2, SceneManager.sceneCountInBuildSettings );
+
+            _savedLevel.Value = idx;
+            SaveGame.Instance.Save( );
 
             SceneManager.LoadScene( idx );
         } );
