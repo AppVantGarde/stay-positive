@@ -245,7 +245,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: PATH MAKER
+  m_Text: STAY POSITIVE
 --- !u!222 &64924061
 CanvasRenderer:
   m_ObjectHideFlags: 0
