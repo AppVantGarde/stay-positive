@@ -50,7 +50,7 @@ public class UIScreen_LevelComplete : MonoBehaviour
     {
         foregroundImage.DOColor( new Color( 0, 0, 0, 1 ), 0.25f ).OnComplete( ( ) =>
         {
-            int idx = _savedLevel.Value;//SceneManager.GetActiveScene( ).buildIndex;
+            int idx = SceneManager.GetActiveScene( ).buildIndex;
 
             if(++idx >= SceneManager.sceneCountInBuildSettings)
                 idx = Random.Range( 2, SceneManager.sceneCountInBuildSettings );
